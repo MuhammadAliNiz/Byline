@@ -43,6 +43,8 @@ export default function ProfilePage() {
     }
   }, [getMe])
 
+  const fullName = `${profile?.firstName || ''} ${profile?.lastName || ''}`.trim() || 'User'
+
   if (loading) {
     return <LoadingSpinner text="Loading profile..." />
   }
@@ -63,7 +65,7 @@ export default function ProfilePage() {
           src={profile?.avatarUrl || 'https://ui-avatars.com/api/?name=User'}
         />
         <div>
-          <h1 className="text-2xl font-bold">{profile?.firstName} {profile?.lastName}</h1>
+          <h1 className="text-2xl font-bold">{fullName}</h1>
           <p className="text-sm text-slate-600">@{profile?.username}</p>
         </div>
       </div>
