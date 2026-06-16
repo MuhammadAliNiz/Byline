@@ -56,7 +56,7 @@ public class S3ServiceImpl implements S3Service {
         PutObjectRequest request = PutObjectRequest.builder()
                 .bucket(bucketName)
                 .key(path + fileKey)
-                .contentType(file.getContentType())
+                .contentType(mimeType)
                 .build();
 
 

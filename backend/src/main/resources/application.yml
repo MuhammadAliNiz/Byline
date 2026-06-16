@@ -86,8 +86,8 @@ app:
     bucket:
       name: byline
     credentials:
-      access-key: admin
-      secret-key: admin123
+      access-key: ${AWS_ACCESS_KEY}
+      secret-key: ${AWS_SECRET_KEY}
     region: us-east-1
     endpoint: http://localhost:9000
 
