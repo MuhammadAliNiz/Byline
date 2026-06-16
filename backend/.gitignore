@@ -1,0 +1,113 @@
+# ==========================================
+# Compiled Class Files
+# ==========================================
+*.class
+
+# ==========================================
+# Package Files (Prevent committing built artifacts)
+# ==========================================
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# ==========================================
+# Maven
+# ==========================================
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# ==========================================
+# Gradle (Included for completeness)
+# ==========================================
+build/
+.gradle/
+gradle-app.setting
+!gradle/wrapper/gradle-wrapper.jar
+
+# ==========================================
+# IntelliJ IDEA
+# ==========================================
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+# ==========================================
+# Eclipse
+# ==========================================
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+bin/
+
+# ==========================================
+# VS Code
+# ==========================================
+.vscode/
+
+# ==========================================
+# Environment Variables & Local Secrets (CRITICAL)
+# ==========================================
+# Never commit real credentials or local environment configs
+.env
+.env.local
+.env.*.local
+application-local.properties
+application-local.yml
+application-local.yaml
+*.pem
+*.key
+*.jks
+*.p12
+
+# ==========================================
+# Logs
+# ==========================================
+*.log
+logs/
+hs_err_pid*
+
+# ==========================================
+# OS Specific
+# ==========================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# ==========================================
+# Spring Boot / JRebel / Misc
+# ==========================================
+rebel.xml
+rebel-remote.xml
+.flattened-pom.xml

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Your Email</title>
+    <style>
+        /* Base reset for email clients */
+        body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+
+        /* Layout styling */
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 0;
+            width: 100% !important;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .header {
+            background-color: #0056b3; /* Primary brand color */
+            color: #ffffff;
+            text-align: center;
+            padding: 30px 20px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .content {
+            padding: 40px 30px;
+            color: #333333;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        .button-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .verify-button {
+            display: inline-block;
+            padding: 14px 30px;
+            background-color: #0056b3;
+            color: #ffffff !important;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .fallback-link-container {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eeeeee;
+            font-size: 14px;
+            color: #666666;
+        }
+        .fallback-link {
+            color: #0056b3;
+            word-break: break-all;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            color: #888888;
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="email-container">
+    <div class="header">
+        <h1>Welcome Aboard!</h1>
+    </div>
+
+    <div class="content">
+        <p>Hi <strong th:text="${firstName}">User</strong>,</p>
+
+        <p>Thank you for registering. We just need to verify your email address to activate your account. Please click the button below to complete your registration. This link will expire in 24 hours.</p>
+
+        <div class="button-container">
+            <a th:href="${verificationUrl}" class="verify-button">Verify My Email</a>
+        </div>
+
+        <p>If you did not create an account using this email address, please safely ignore and delete this email.</p>
+
+        <div class="fallback-link-container">
+            <p>If the button above doesn't work, copy and paste the following link into your web browser:</p>
+            <p>
+                <a th:href="${verificationUrl}" th:text="${verificationUrl}" class="fallback-link">
+                    https://fallback-url.com/verify
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2026 Your Company Name. All rights reserved.</p>
+        <p>This is an automated message, please do not reply.</p>
+    </div>
+</div>
+
+</body>
+</html>

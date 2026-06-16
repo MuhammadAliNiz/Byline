@@ -1,0 +1,93 @@
+spring:
+  application:
+    name: Byline
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASS}
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false           # Disable OSIV to avoid N+1 traps
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: public
+        jdbc:
+          time_zone: UTC
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASS:}
+      timeout: 2000ms
+
+  mail:
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
+    username: ${MAIL_USER}
+    password: ${MAIL_PASS}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRETS}
+            scope: profile, email
+        provider:
+            google:
+              authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+              token-uri: https://oauth2.googleapis.com/token
+              user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+              user-name-attribute: sub
+
+
+
+  jackson:
+    default-property-inclusion: non_empty
+    time-zone: UTC
+    deserialization:
+       fail-on-unknown-properties: false
+
+
+app:
+  frontend-base-url: ${FRONTEND_URL:http://localhost:3000}
+  backend-base-url: ${BACKEND_URL:http://localhost:8080}
+
+  jwt:
+      secret: ${JWT_SECRET}
+      jwt-expiration-ms: ${JWT_EXPIRATION}
+      jwt-expiration-s: ${JWT_EXPIRATION_SECONDS}
+      refresh-token-expiration-s: ${JWT_REFRESH_EXPIRATION_SECONDS}
+
+
+  MAX_IMAGE_SIZE: 5242880 # 5MB in bytes
+  MAX_VIDEO_SIZE: 104857600 # 100MB in bytes
+  MAX_DOCUMENT_SIZE: 10485760 # 10MB in bytes
+
+  #aws s3 config
+  aws:
+    bucket:
+      name: byline
+    credentials:
+      access-key: admin
+      secret-key: admin123
+    region: us-east-1
+    endpoint: http://localhost:9000
+
