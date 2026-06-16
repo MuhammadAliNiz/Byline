@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Alert from '../components/Alert'
 import LoadingSpinner from '../components/LoadingSpinner'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/authContext'
 import { ApiError } from '../lib/api'
 
 export default function OAuthCallbackPage() {

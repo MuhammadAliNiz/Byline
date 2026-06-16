@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Alert from '../components/Alert'
 import LoadingSpinner from '../components/LoadingSpinner'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/authContext'
 
 function ProfileItem({ label, value }) {
   return (

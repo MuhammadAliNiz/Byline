@@ -3,7 +3,7 @@ import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import Alert from '../components/Alert'
 import FormInput from '../components/FormInput'
 import LoadingSpinner from '../components/LoadingSpinner'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/authContext'
 import { startGoogleOAuth, ApiError } from '../lib/api'
 import { mapFieldErrors, validateEmail } from '../lib/validation'
 

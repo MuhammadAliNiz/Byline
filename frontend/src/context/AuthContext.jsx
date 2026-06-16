@@ -1,10 +1,9 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { ApiError, apiRequest } from '../lib/api'
+import { AuthContext } from './authContext'
 
 const ACCESS_TOKEN_KEY = 'byline_access_token'
 const USER_KEY = 'byline_user'
-
-const AuthContext = createContext(null)
 
 function readStoredUser() {
   try {
@@ -22,22 +21,22 @@ export function AuthProvider({ children }) {
 
   const isAuthenticated = Boolean(accessToken)
 
-  const persistAuth = (token, authUser) => {
+  const persistAuth = useCallback((token, authUser) => {
     setAccessToken(token)
     setUser(authUser)
 
     localStorage.setItem(ACCESS_TOKEN_KEY, token)
     localStorage.setItem(USER_KEY, JSON.stringify(authUser))
-  }
+  }, [])
 
-  const clearAuth = () => {
+  const clearAuth = useCallback(() => {
     setAccessToken(null)
     setUser(null)
     localStorage.removeItem(ACCESS_TOKEN_KEY)
     localStorage.removeItem(USER_KEY)
-  }
+  }, [])
 
-  const refreshSession = async () => {
+  const refreshSession = useCallback(async () => {
     const response = await apiRequest('/api/auth/refresh', {
       method: 'POST',
       headers: {
@@ -52,7 +51,7 @@ export function AuthProvider({ children }) {
 
     persistAuth(loginData.accessToken, loginData.user)
     return loginData
-  }
+  }, [persistAuth])
 
   useEffect(() => {
     let active = true
@@ -74,35 +73,38 @@ export function AuthProvider({ children }) {
     return () => {
       active = false
     }
-  }, [])
+  }, [clearAuth, refreshSession])
 
-  const login = async (email, password) => {
-    const response = await apiRequest('/api/auth/login', {
-      method: 'POST',
-      body: JSON.stringify({ email, password }),
-    })
+  const login = useCallback(
+    async (email, password) => {
+      const response = await apiRequest('/api/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+      })
 
-    const loginData = response?.data
-    persistAuth(loginData.accessToken, loginData.user)
-    return loginData
-  }
+      const loginData = response?.data
+      persistAuth(loginData.accessToken, loginData.user)
+      return loginData
+    },
+    [persistAuth],
+  )
 
-  const register = async (payload) => {
+  const register = useCallback(async (payload) => {
     return apiRequest('/api/auth/register', {
       method: 'POST',
       body: JSON.stringify(payload),
     })
-  }
+  }, [])
 
-  const logout = async () => {
+  const logout = useCallback(async () => {
     try {
       await apiRequest('/api/auth/logout', { method: 'POST', body: JSON.stringify({}) })
     } finally {
       clearAuth()
     }
-  }
+  }, [clearAuth])
 
-  const getMe = async () => {
+  const getMe = useCallback(async () => {
     if (!isAuthenticated) {
       throw new ApiError('Not authenticated', 401)
     }
@@ -130,7 +132,7 @@ export function AuthProvider({ children }) {
 
       throw error
     }
-  }
+  }, [accessToken, isAuthenticated, refreshSession])
 
   const value = useMemo(
     () => ({
@@ -144,17 +146,8 @@ export function AuthProvider({ children }) {
       refreshSession,
       getMe,
     }),
-    [accessToken, user, isAuthenticated, isInitializing],
+    [accessToken, user, isAuthenticated, isInitializing, login, register, logout, refreshSession, getMe],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
-}
-
-export function useAuth() {
-  const context = useContext(AuthContext)
-  if (!context) {
-    throw new Error('useAuth must be used within AuthProvider')
-  }
-
-  return context
 }
